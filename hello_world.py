@@ -45,7 +45,6 @@ def retrieve_string_to_print():
 
     return list(soup.find('h1', class_="title").get_text() + "!")
 
-
 def char_factory(char):
     # special cases first
     if char == " ":
@@ -55,5 +54,13 @@ def char_factory(char):
     else:
         eval(char)()
 
+# going to the end of recursion first
+def print_string(chars):
+    if len(chars) == 0:
+        return
+    print_string(chars[1:])
+    char_factory(chars[0])
 
-[char_factory(c) for c in retrieve_string_to_print()]
+string_to_print = retrieve_string_to_print()
+reverted_string = [string_to_print[len(string_to_print) - ind - 1] for ind, c in enumerate(string_to_print)]
+print_string(reverted_string)
