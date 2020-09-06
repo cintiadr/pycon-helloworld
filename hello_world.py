@@ -1,48 +1,53 @@
 import requests
 from bs4 import BeautifulSoup
 import pyfiglet
+from pyfiglet import FigletFont,Figlet
+import random
 
 IMPORTANT_URL="https://cintia.me/blog/post/hello-world/"
-
+DECENT_FONTS = ["twin_cob","alligator2", "pebbles", "xsansbi", "npn_____", "eftitalic", "pawn_ins", "clr5x8", "type_set","1943____", "nancyj-underlined", "univers", "brite", "chunky", "clr8x8", "sbooki", "demo_1__", "epic"]
 
 class Space:
   def __init__(self):
     print("\n")
 class Exclamation:
   def __init__(self):
-    print(pyfiglet.figlet_format("!"))
+    print(get_good_rendered().renderText('!'))
 class d:
   def __init__(self):
-    print(pyfiglet.figlet_format("d"))
+    print(get_good_rendered().renderText("d"))
 class e:
   def __init__(self):
-    print(pyfiglet.figlet_format("e"))
+    print(get_good_rendered().renderText("e"))
 class H:
   def __init__(self):
-    print(pyfiglet.figlet_format("H"))
+    print(get_good_rendered().renderText("H"))
 class l:
   def __init__(self):
-    print(pyfiglet.figlet_format("l"))
+    print(get_good_rendered().renderText("l"))
 class o:
   def __init__(self):
-    print(pyfiglet.figlet_format("o"))
+    print(get_good_rendered().renderText("o"))
 class r:
   def __init__(self):
-    print(pyfiglet.figlet_format("r"))
+    print(get_good_rendered().renderText("r"))
 class w:
   def __init__(self):
-    print(pyfiglet.figlet_format("w"))
+    print(get_good_rendered().renderText("w"))
 
+def get_good_rendered():
+    font = DECENT_FONTS[random.randint(0, len(DECENT_FONTS) - 1)]
+    return Figlet(font=font)
 
-def retrieve_chars():
+def retrieve_string_to_print():
     req = requests.get(IMPORTANT_URL)
     soup = BeautifulSoup(req.content, 'html.parser')
 
     return list(soup.find('h1', class_="title").get_text() + "!")
 
 
-def printable_char(char):
-    # special case
+def char_factory(char):
+    # special cases first
     if char == " ":
         Space()
     elif char == "!":
@@ -51,4 +56,4 @@ def printable_char(char):
         eval(char)()
 
 
-all_chars = [printable_char(c) for c in retrieve_chars()]
+[char_factory(c) for c in retrieve_string_to_print()]
